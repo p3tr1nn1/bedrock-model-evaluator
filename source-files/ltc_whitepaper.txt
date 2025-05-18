@@ -1,0 +1,11 @@
+Litecoin: A Peer-to-Peer Internet Currency
+
+Abstract
+
+Litecoin is a peer-to-peer Internet currency that enables instant, near-zero cost payments to anyone in the world. It is an open source, global payment network that is fully decentralized without any central authorities. Mathematics secures the network and empowers individuals to control their own finances. Litecoin features faster transaction confirmation times and improved storage efficiency than the leading math-based currency. With substantial industry support, trade volume, and liquidity, Litecoin is a proven medium of commerce complementary to Bitcoin.
+
+1. Introduction
+
+Litecoin is the result of some of us who joined together on IRC in an effort to create a real alternative currency similar to Bitcoin. We wanted to make a coin that is silver to Bitcoin's gold. Various alternative currencies have come and gone. Some brought innovation, but they all had problems.
+
+Litecoin is a peer-to-peer Internet currency that enables instant, near-zero cost payments to anyone in the world. Litecoin is an open source, global payment network that is fully decentralized without any central authorities. Mathematics secures the network and empowers individuals to control their own finances. Litecoin features faster transaction confirmation times and improved storage efficiency than the leading math-based currency. With substantial industry support, trade volume, and liquidity, Litecoin is a proven medium of commerce complementary to Bitcoin.
