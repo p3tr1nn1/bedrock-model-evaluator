@@ -380,6 +380,8 @@
             margin-bottom: 1.5rem;
             border-bottom: 2px solid var(--border);
             padding-bottom: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
         }
         
         .model-tab {
@@ -421,6 +423,11 @@
             content: '✓';
         }
         
+        .model-content-container {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
         .model-content {
             display: none;
             padding: 1.5rem;
@@ -433,6 +440,17 @@
         .model-content.active {
             display: block;
             animation: fadeIn 0.3s ease;
+        }
+        
+        .model-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
         }
         
         @keyframes fadeIn {
@@ -517,6 +535,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
             gap: 1.5rem;
+            max-height: 800px;
+            overflow-y: auto;
         }
         
         .comparison-item {
