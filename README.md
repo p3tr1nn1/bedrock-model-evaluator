@@ -1,5 +1,7 @@
 # Bedrock Model Evaluator
 
+**Live Demo: https://bedrock.goth.capital/**
+
 <div align="center">
 
 ![AWS Bedrock](https://img.shields.io/badge/AWS-Bedrock-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
