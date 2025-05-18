@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Bedrock Model Pricing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #232f3e;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #232f3e;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .model-id {
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AWS Bedrock Model Pricing</h1>
+        
+        <h2>Amazon Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Model ID</th>
+                    <th>Input Price (per 1K tokens)</th>
+                    <th>Output Price (per 1K tokens)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Titan Text Premier</td>
+                    <td class="model-id">amazon.titan-text-premier-v1:0</td>
+                    <td>$0.0008</td>
+                    <td>$0.0016</td>
+                </tr>
+                <tr>
+                    <td>Titan Text Express</td>
+                    <td class="model-id">amazon.titan-text-express-v1</td>
+                    <td>$0.0003</td>
+                    <td>$0.0004</td>
+                </tr>
+                <tr>
+                    <td>Titan Text Lite</td>
+                    <td class="model-id">amazon.titan-text-lite-v1</td>
+                    <td>$0.0002</td>
+                    <td>$0.0003</td>
+                </tr>
+                <tr>
+                    <td>Amazon Nova Pro</td>
+                    <td class="model-id">amazon.nova-pro-v1:0</td>
+                    <td>$0.00125</td>
+                    <td>$0.00375</td>
+                </tr>
+                <tr>
+                    <td>Amazon Nova Lite</td>
+                    <td class="model-id">amazon.nova-lite-v1:0</td>
+                    <td>$0.0006</td>
+                    <td>$0.0018</td>
+                </tr>
+                <tr>
+                    <td>Amazon Nova Micro</td>
+                    <td class="model-id">amazon.nova-micro-v1:0</td>
+                    <td>$0.0003</td>
+                    <td>$0.0009</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Anthropic Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Model ID</th>
+                    <th>Input Price (per 1K tokens)</th>
+                    <th>Output Price (per 1K tokens)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Claude 3 Haiku</td>
+                    <td class="model-id">anthropic.claude-3-haiku-20240307-v1:0</td>
+                    <td>$0.00025</td>
+                    <td>$0.00125</td>
+                </tr>
+                <tr>
+                    <td>Claude 3.5 Sonnet</td>
+                    <td class="model-id">anthropic.claude-3-5-sonnet-20240620-v1:0</td>
+                    <td>$0.003</td>
+                    <td>$0.015</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>AI21 Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Model ID</th>
+                    <th>Input Price (per 1K tokens)</th>
+                    <th>Output Price (per 1K tokens)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Jamba 1.5 Large</td>
+                    <td class="model-id">ai21.jamba-1-5-large-v1:0</td>
+                    <td>$0.0125</td>
+                    <td>$0.0125</td>
+                </tr>
+                <tr>
+                    <td>Jamba 1.5 Mini</td>
+                    <td class="model-id">ai21.jamba-1-5-mini-v1:0</td>
+                    <td>$0.003</td>
+                    <td>$0.003</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Cohere Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Model ID</th>
+                    <th>Input Price (per 1K tokens)</th>
+                    <th>Output Price (per 1K tokens)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Command Text</td>
+                    <td class="model-id">cohere.command-text-v14</td>
+                    <td>$0.0005</td>
+                    <td>$0.0015</td>
+                </tr>
+                <tr>
+                    <td>Command R</td>
+                    <td class="model-id">cohere.command-r-v1:0</td>
+                    <td>$0.0015</td>
+                    <td>$0.0015</td>
+                </tr>
+                <tr>
+                    <td>Command R Plus</td>
+                    <td class="model-id">cohere.command-r-plus-v1:0</td>
+                    <td>$0.003</td>
+                    <td>$0.003</td>
+                </tr>
+                <tr>
+                    <td>Command Light</td>
+                    <td class="model-id">cohere.command-light-text-v14</td>
+                    <td>$0.0003</td>
+                    <td>$0.0006</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Meta Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Model ID</th>
+                    <th>Input Price (per 1K tokens)</th>
+                    <th>Output Price (per 1K tokens)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Llama 3 8B Instruct</td>
+                    <td class="model-id">meta.llama3-8b-instruct-v1:0</td>
+                    <td>$0.00035</td>
+                    <td>$0.00035</td>
+                </tr>
+                <tr>
+                    <td>Llama 3 70B Instruct</td>
+                    <td class="model-id">meta.llama3-70b-instruct-v1:0</td>
+                    <td>$0.00195</td>
+                    <td>$0.00195</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Mistral Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Model ID</th>
+                    <th>Input Price (per 1K tokens)</th>
+                    <th>Output Price (per 1K tokens)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mistral 7B Instruct</td>
+                    <td class="model-id">mistral.mistral-7b-instruct-v0:2</td>
+                    <td>$0.0002</td>
+                    <td>$0.0002</td>
+                </tr>
+                <tr>
+                    <td>Mixtral 8x7B Instruct</td>
+                    <td class="model-id">mistral.mixtral-8x7b-instruct-v0:1</td>
+                    <td>$0.0007</td>
+                    <td>$0.0009</td>
+                </tr>
+                <tr>
+                    <td>Mistral Large</td>
+                    <td class="model-id">mistral.mistral-large-2402-v1:0</td>
+                    <td>$0.002</td>
+                    <td>$0.006</td>
+                </tr>
+                <tr>
+                    <td>Mistral Small</td>
+                    <td class="model-id">mistral.mistral-small-2402-v1:0</td>
+                    <td>$0.0006</td>
+                    <td>$0.0018</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>Note: Prices are approximate and may vary based on AWS region and any special pricing agreements. For the most up-to-date pricing, please visit the <a href="https://aws.amazon.com/bedrock/pricing/" target="_blank">AWS Bedrock pricing page</a>.</p>
+            <p>Generated on: May 18, 2025</p>
+        </div>
+    </div>
+</body>
+</html>

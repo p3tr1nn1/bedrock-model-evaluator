@@ -1,0 +1,456 @@
+// Command used: aws bedrock list-foundation-models --region us-east-1 --by-inference-type ON_DEMAND --by-output-modality TEXT --query "modelSummaries[?modelLifecycle.status=='ACTIVE']"
+{
+  "modelSummaries": [
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-tg1-large",
+      "modelId": "amazon.titan-tg1-large",
+      "modelName": "Titan Text Large",
+      "providerName": "Amazon",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-text-premier-v1:0",
+      "modelId": "amazon.titan-text-premier-v1:0",
+      "modelName": "Titan Text G1 - Premier",
+      "providerName": "Amazon",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-pro-v1:0",
+      "modelId": "amazon.nova-pro-v1:0",
+      "modelName": "Nova Pro",
+      "providerName": "Amazon",
+      "inputModalities": [
+        "TEXT",
+        "IMAGE",
+        "VIDEO"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND",
+        "INFERENCE_PROFILE"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-lite-v1:0",
+      "modelId": "amazon.nova-lite-v1:0",
+      "modelName": "Nova Lite",
+      "providerName": "Amazon",
+      "inputModalities": [
+        "TEXT",
+        "IMAGE",
+        "VIDEO"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND",
+        "INFERENCE_PROFILE"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-micro-v1:0",
+      "modelId": "amazon.nova-micro-v1:0",
+      "modelName": "Nova Micro",
+      "providerName": "Amazon",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND",
+        "INFERENCE_PROFILE"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-sonic-v1:0",
+      "modelId": "amazon.nova-sonic-v1:0",
+      "modelName": "Nova Sonic",
+      "providerName": "Amazon",
+      "inputModalities": [
+        "SPEECH"
+      ],
+      "outputModalities": [
+        "SPEECH",
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-text-lite-v1",
+      "modelId": "amazon.titan-text-lite-v1",
+      "modelName": "Titan Text G1 - Lite",
+      "providerName": "Amazon",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-text-express-v1",
+      "modelId": "amazon.titan-text-express-v1",
+      "modelName": "Titan Text G1 - Express",
+      "providerName": "Amazon",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/ai21.jamba-1-5-large-v1:0",
+      "modelId": "ai21.jamba-1-5-large-v1:0",
+      "modelName": "Jamba 1.5 Large",
+      "providerName": "AI21 Labs",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/ai21.jamba-1-5-mini-v1:0",
+      "modelId": "ai21.jamba-1-5-mini-v1:0",
+      "modelName": "Jamba 1.5 Mini",
+      "providerName": "AI21 Labs",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-haiku-20240307-v1:0",
+      "modelId": "anthropic.claude-3-haiku-20240307-v1:0",
+      "modelName": "Claude 3 Haiku",
+      "providerName": "Anthropic",
+      "inputModalities": [
+        "TEXT",
+        "IMAGE"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0",
+      "modelId": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+      "modelName": "Claude 3.5 Sonnet",
+      "providerName": "Anthropic",
+      "inputModalities": [
+        "TEXT",
+        "IMAGE"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND",
+        "INFERENCE_PROFILE"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/cohere.command-text-v14",
+      "modelId": "cohere.command-text-v14",
+      "modelName": "Command",
+      "providerName": "Cohere",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/cohere.command-r-v1:0",
+      "modelId": "cohere.command-r-v1:0",
+      "modelName": "Command R",
+      "providerName": "Cohere",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/cohere.command-r-plus-v1:0",
+      "modelId": "cohere.command-r-plus-v1:0",
+      "modelName": "Command R+",
+      "providerName": "Cohere",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/cohere.command-light-text-v14",
+      "modelId": "cohere.command-light-text-v14",
+      "modelName": "Command Light",
+      "providerName": "Cohere",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/meta.llama3-8b-instruct-v1:0",
+      "modelId": "meta.llama3-8b-instruct-v1:0",
+      "modelName": "Llama 3 8B Instruct",
+      "providerName": "Meta",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/meta.llama3-70b-instruct-v1:0",
+      "modelId": "meta.llama3-70b-instruct-v1:0",
+      "modelName": "Llama 3 70B Instruct",
+      "providerName": "Meta",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/mistral.mistral-7b-instruct-v0:2",
+      "modelId": "mistral.mistral-7b-instruct-v0:2",
+      "modelName": "Mistral 7B Instruct",
+      "providerName": "Mistral AI",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/mistral.mixtral-8x7b-instruct-v0:1",
+      "modelId": "mistral.mixtral-8x7b-instruct-v0:1",
+      "modelName": "Mixtral 8x7B Instruct",
+      "providerName": "Mistral AI",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/mistral.mistral-large-2402-v1:0",
+      "modelId": "mistral.mistral-large-2402-v1:0",
+      "modelName": "Mistral Large (24.02)",
+      "providerName": "Mistral AI",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    },
+    {
+      "modelArn": "arn:aws:bedrock:us-east-1::foundation-model/mistral.mistral-small-2402-v1:0",
+      "modelId": "mistral.mistral-small-2402-v1:0",
+      "modelName": "Mistral Small (24.02)",
+      "providerName": "Mistral AI",
+      "inputModalities": [
+        "TEXT"
+      ],
+      "outputModalities": [
+        "TEXT"
+      ],
+      "responseStreamingSupported": true,
+      "customizationsSupported": [],
+      "inferenceTypesSupported": [
+        "ON_DEMAND"
+      ],
+      "modelLifecycle": {
+        "status": "ACTIVE"
+      }
+    }
+  ]
+}
