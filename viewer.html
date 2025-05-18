@@ -726,26 +726,6 @@
         
         <div class="results-container" id="resultsContainer">
             <div class="loading hidden" id="loadingResults">Loading results...</div>
-            <div class="card" id="metadataCard">
-                <h2>Test Metadata</h2>
-                <div class="card-content">
-                    <div class="metadata" id="metadata"></div>
-                </div>
-            </div>
-            
-            <div class="card" id="inputCard">
-                <h2>Input</h2>
-                <div class="card-content">
-                    <div class="input-text" id="inputText"></div>
-                </div>
-            </div>
-            
-            <div class="card" id="promptCard">
-                <h2>Prompt</h2>
-                <div class="card-content">
-                    <div class="prompt-text" id="promptText"></div>
-                </div>
-            </div>
             
             <div class="card" id="processingTimesCard">
                 <h2>Processing Times</h2>
@@ -767,6 +747,27 @@
                     </div>
                     
                     <div id="comparisonView" class="comparison-view hidden"></div>
+                </div>
+            </div>
+            
+            <div class="card" id="metadataCard">
+                <h2>Test Metadata</h2>
+                <div class="card-content">
+                    <div class="metadata" id="metadata"></div>
+                </div>
+            </div>
+            
+            <div class="card" id="inputCard">
+                <h2>Input</h2>
+                <div class="card-content">
+                    <div class="input-text" id="inputText"></div>
+                </div>
+            </div>
+            
+            <div class="card" id="promptCard">
+                <h2>Prompt</h2>
+                <div class="card-content">
+                    <div class="prompt-text" id="promptText"></div>
                 </div>
             </div>
             
@@ -1011,8 +1012,8 @@
                 document.getElementById('errorsCard').classList.add('hidden');
             }
             
-            // Collapse all cards except metadata and processing times by default
-            document.querySelectorAll('.card:not(#metadataCard):not(#processingTimesCard)').forEach(card => {
+            // Collapse all cards except processing times and responses by default
+            document.querySelectorAll('.card:not(#processingTimesCard):not(#responsesCard)').forEach(card => {
                 card.classList.add('collapsed');
             });
         }
