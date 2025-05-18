@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedrock Model Testing Results Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0ff;
+            --primary-light: #00ccff;
+            --secondary: #f0f;
+            --secondary-light: #ff00cc;
+            --light: #222;
+            --dark: #000;
+            --success: #0f0;
+            --danger: #f00;
+            --info: #0ff;
+            --border: #333;
+            --text: #fff;
+            --text-light: #aaa;
+            --background: #111;
+            --card-bg: #1a1a1a;
+            --shadow: 0 2px 10px rgba(0, 255, 255, 0.2);
+            --shadow-hover: 0 5px 15px rgba(255, 0, 255, 0.3);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 0, 255, 0.05) 0%, transparent 50%);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); border-color: #0ff; }
+            20% { box-shadow: 0 0 15px rgba(255, 0, 255, 0.3); border-color: #f0f; }
+            40% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); border-color: #0f0; }
+            60% { box-shadow: 0 0 15px rgba(255, 255, 0, 0.3); border-color: #ff0; }
+            80% { box-shadow: 0 0 15px rgba(255, 119, 0, 0.3); border-color: #f70; }
+            100% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); border-color: #0ff; }
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, #222 100%);
+            color: var(--primary);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--primary);
+            animation: glowPulse 10s infinite linear;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,255,255,0.1) 0%, rgba(0,255,255,0) 70%);
+            pointer-events: none;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+            animation: neonPulse 10s infinite linear;
+        }
+        
+        header h1::before {
+            content: '⚡';
+            margin-right: 12px;
+            font-size: 1.8rem;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.9);
+        }
+        
+        .file-selector {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .file-selector:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .file-selector h2 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.8rem;
+            font-weight: 600;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-selector h2::before {
+            content: '📁';
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .file-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 1.2rem;
+        }
+        
+        .file-item {
+            background-color: var(--light);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+            color: var(--text);
+        }
+        
+        .file-item::before {
+            content: '📄';
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+        
+        .file-item:hover {
+            background-color: var(--dark);
+            color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
+            border-color: var(--secondary);
+        }
+        
+        .file-item.active {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2) 0%, rgba(0, 255, 255, 0.2) 100%);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+        
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.8rem;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+            border-top: 2px solid var(--primary);
+            border-left: 1px solid var(--primary-light);
+            border-right: 1px solid var(--primary-light);
+            border-bottom: 1px solid var(--primary-light);
+        }
+        
+        .card:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+        }
+        
+        .card#processingTimesCard {
+            animation: glowPulse 10s infinite linear;
+        }
+        
+        @keyframes neonPulse {
+            0% { color: #0ff; text-shadow: 0 0 5px rgba(0, 255, 255, 0.7); }
+            20% { color: #f0f; text-shadow: 0 0 5px rgba(255, 0, 255, 0.7); }
+            40% { color: #0f0; text-shadow: 0 0 5px rgba(0, 255, 0, 0.7); }
+            60% { color: #ff0; text-shadow: 0 0 5px rgba(255, 255, 0, 0.7); }
+            80% { color: #f70; text-shadow: 0 0 5px rgba(255, 119, 0, 0.7); }
+            100% { color: #0ff; text-shadow: 0 0 5px rgba(0, 255, 255, 0.7); }
+        }
+        
+        @keyframes borderPulse {
+            0% { border-bottom-color: #0ff; }
+            20% { border-bottom-color: #f0f; }
+            40% { border-bottom-color: #0f0; }
+            60% { border-bottom-color: #ff0; }
+            80% { border-bottom-color: #f70; }
+            100% { border-bottom-color: #0ff; }
+        }
+        
+        .card h2 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.8rem;
+            font-weight: 600;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            cursor: pointer;
+            user-select: none;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+            animation: neonPulse 10s infinite linear, borderPulse 10s infinite linear;
+        }
+        
+        .card h2::after {
+            content: '▼';
+            margin-left: auto;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .card.collapsed h2::after {
+            transform: rotate(-90deg);
+        }
+        
+        .card-content {
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            max-height: 2000px;
+            opacity: 1;
+            overflow: hidden;
+        }
+        
+        .card.collapsed .card-content {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #processingTimesCard h2::before {
+            content: '⏱️';
+            margin-right: 10px;
+        }
+        
+        .chart-container {
+            background-color: var(--dark);
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--primary);
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
+            margin-top: 1rem;
+        }
+        
+        .chart-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .chart-option {
+            background-color: var(--light);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .chart-option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .chart-option.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        #metadataCard h2::before {
+            content: '🔍';
+            margin-right: 10px;
+        }
+        
+        #inputCard h2::before {
+            content: '📥';
+            margin-right: 10px;
+        }
+        
+        #promptCard h2::before {
+            content: '💬';
+            margin-right: 10px;
+        }
+        
+        #responsesCard h2::before {
+            content: '🤖';
+            margin-right: 10px;
+        }
+        
+        #errorsCard h2::before {
+            content: '⚠️';
+            margin-right: 10px;
+        }
+        
+        .metadata {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .metadata-item {
+            background-color: var(--dark);
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius);
+            border-left: 3px solid var(--primary);
+            transition: var(--transition);
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
+        }
+        
+        .metadata-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+            border-left: 3px solid var(--secondary);
+        }
+        
+        .metadata-item strong {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .metadata-item span {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text);
+            word-break: break-word;
+        }
+        
+        .model-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        
+        .model-tab {
+            padding: 10px 16px;
+            cursor: pointer;
+            border-radius: var(--radius);
+            background-color: var(--light);
+            border: 1px solid var(--primary);
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            color: var(--text);
+        }
+        
+        .model-tab::before {
+            content: '🔹';
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .model-tab:hover {
+            background-color: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .model-tab.active {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2) 0%, rgba(0, 255, 255, 0.2) 100%);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+        
+        .model-tab.active::before {
+            content: '✓';
+        }
+        
+        .model-content {
+            display: none;
+            padding: 1.5rem;
+            background-color: var(--dark);
+            border-radius: var(--radius);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+        }
+        
+        .model-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .response-text {
+            white-space: pre-wrap;
+            background-color: var(--dark);
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--primary);
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Inter', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
+            color: var(--text);
+        }
+        
+        .error-text {
+            white-space: pre-wrap;
+            background-color: rgba(255, 0, 0, 0.1);
+            color: #ff5555;
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            border: 1px solid #ff5555;
+            font-family: 'Inter', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+        
+        .processing-time {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-top: 0.8rem;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);
+        }
+        
+        .processing-time::before {
+            content: '⏱️';
+            margin-right: 6px;
+        }
+        
+        .prompt-text {
+            white-space: pre-wrap;
+            background-color: var(--dark);
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--primary);
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Inter', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
+            color: var(--text);
+        }
+        
+        .input-text {
+            white-space: pre-wrap;
+            background-color: var(--dark);
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--primary);
+            max-height: 250px;
+            overflow-y: auto;
+            font-family: 'Inter', monospace;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
+            color: var(--text);
+        }
+        
+        .comparison-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .comparison-item {
+            padding: 1.2rem;
+            background-color: var(--dark);
+            border-radius: var(--radius);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+        
+        .comparison-item:hover {
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+        }
+        
+        .comparison-item h3 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            animation: neonPulse 10s infinite linear, borderPulse 10s infinite linear;
+        }
+        
+        .comparison-item h3::before {
+            content: '🔹';
+            margin-right: 8px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+        }
+        
+        .loading::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--dark);
+            border-top-color: var(--primary);
+            border-right-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .toggle-view-btn {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.3) 0%, rgba(255, 0, 255, 0.3) 100%);
+            color: var(--text);
+            border: 1px solid var(--primary);
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        
+        .toggle-view-btn::before {
+            content: '🔄';
+            margin-right: 8px;
+        }
+        
+        .toggle-view-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.4) 0%, rgba(0, 255, 255, 0.4) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+            border-color: var(--secondary);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--dark) 0%, #222 100%);
+            color: var(--primary);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            animation: glowPulse 10s infinite linear;
+        }
+        
+        footer p {
+            animation: neonPulse 10s infinite linear;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,255,255,0.1) 0%, rgba(0,255,255,0) 70%);
+            pointer-events: none;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+            background-color: #111;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #222;
+            border-radius: 10px;
+            box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #0ff, #f0f);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #f0f, #0ff);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .card {
+                padding: 1.2rem;
+            }
+            
+            .comparison-view {
+                grid-template-columns: 1fr;
+            }
+            
+            .metadata {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bedrock Model Testing Results Viewer</h1>
+    </header>
+    
+    <div class="container">
+        <div class="file-selector">
+            <h2>Select a Result File</h2>
+            <div class="file-list" id="fileList">
+                <div class="loading">Loading files...</div>
+            </div>
+        </div>
+        
+        <div class="results-container" id="resultsContainer">
+            <div class="loading hidden" id="loadingResults">Loading results...</div>
+            <div class="card" id="metadataCard">
+                <h2>Test Metadata</h2>
+                <div class="card-content">
+                    <div class="metadata" id="metadata"></div>
+                </div>
+            </div>
+            
+            <div class="card" id="inputCard">
+                <h2>Input</h2>
+                <div class="card-content">
+                    <div class="input-text" id="inputText"></div>
+                </div>
+            </div>
+            
+            <div class="card" id="promptCard">
+                <h2>Prompt</h2>
+                <div class="card-content">
+                    <div class="prompt-text" id="promptText"></div>
+                </div>
+            </div>
+            
+            <div class="card" id="processingTimesCard">
+                <h2>Processing Times</h2>
+                <div class="card-content">
+                    <div class="chart-container" style="position: relative; height:400px; width:100%">
+                        <canvas id="processingTimesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" id="responsesCard">
+                <h2>Model Responses</h2>
+                <div class="card-content">
+                    <button class="toggle-view-btn" id="toggleViewBtn">Switch to Comparison View</button>
+                    
+                    <div id="tabView">
+                        <div class="model-tabs" id="modelTabs"></div>
+                        <div class="model-content-container" id="modelContentContainer"></div>
+                    </div>
+                    
+                    <div id="comparisonView" class="comparison-view hidden"></div>
+                </div>
+            </div>
+            
+            <div class="card" id="errorsCard">
+                <h2>Errors</h2>
+                <div class="card-content">
+                    <div id="errorsContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Bedrock Model Testing Framework Results Viewer</p>
+    </footer>
+
+    <script>
+        // Configuration - will be set by the server
+        // If not set by server, this default will be used
+        if (typeof outputDir === 'undefined') {
+            var outputDir = 'outputs';
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up collapsible cards
+            document.querySelectorAll('.card h2').forEach(header => {
+                header.addEventListener('click', () => {
+                    const card = header.closest('.card');
+                    card.classList.toggle('collapsed');
+                });
+            });
+            
+            // Fetch the list of JSON files from our API endpoint
+            fetch('/api/list-files')
+                .then(response => response.json())
+                .then(files => {
+                    const fileList = document.getElementById('fileList');
+                    fileList.innerHTML = '';
+                    
+                    if (files.length === 0) {
+                        fileList.innerHTML = '<p>No result files found</p>';
+                        return;
+                    }
+                    
+                    files.forEach(file => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        fileItem.textContent = file;
+                        fileItem.addEventListener('click', (event) => loadFile(file, event));
+                        fileList.appendChild(fileItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching file list:', error);
+                    document.getElementById('fileList').innerHTML = '<p>Error loading files. Please make sure the server is running.</p>';
+                });
+            
+            // Toggle between tab view and comparison view
+            document.getElementById('toggleViewBtn').addEventListener('click', function() {
+                const tabView = document.getElementById('tabView');
+                const comparisonView = document.getElementById('comparisonView');
+                const btn = document.getElementById('toggleViewBtn');
+                
+                if (tabView.classList.contains('hidden')) {
+                    tabView.classList.remove('hidden');
+                    comparisonView.classList.add('hidden');
+                    btn.textContent = 'Switch to Comparison View';
+                } else {
+                    tabView.classList.add('hidden');
+                    comparisonView.classList.remove('hidden');
+                    btn.textContent = 'Switch to Tab View';
+                }
+            });
+        });
+        
+        function loadFile(filename, event) {
+            // Update active file
+            const fileItems = document.querySelectorAll('.file-item');
+            fileItems.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show loading
+            document.getElementById('loadingResults').classList.remove('hidden');
+            
+            // Hide all cards initially
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.add('hidden');
+            });
+            
+            // Cancel any existing chart animation
+            if (window.chartColorAnimation) {
+                cancelAnimationFrame(window.chartColorAnimation);
+            }
+            
+            // Fetch the JSON file
+            fetch(outputDir + '/' + filename)
+                .then(response => response.json())
+                .then(data => displayResults(data))
+                .catch(error => {
+                    console.error('Error loading file:', error);
+                    document.getElementById('loadingResults').classList.add('hidden');
+                    alert('Error loading file: ' + error.message);
+                });
+        }
+        
+        function displayResults(data) {
+            // Hide loading
+            document.getElementById('loadingResults').classList.add('hidden');
+            
+            // Display metadata
+            const metadataCard = document.getElementById('metadataCard');
+            const metadataContainer = document.getElementById('metadata');
+            metadataContainer.innerHTML = '';
+            
+            // Add file info
+            addMetadataItem(metadataContainer, 'Input File', data.input_file);
+            addMetadataItem(metadataContainer, 'Prompt Name', data.prompt_name);
+            
+            // Add test parameters
+            if (data.metadata) {
+                Object.entries(data.metadata).forEach(([key, value]) => {
+                    addMetadataItem(metadataContainer, formatKey(key), value);
+                });
+            }
+            
+            metadataCard.classList.remove('hidden');
+            
+            // Display input text
+            const inputCard = document.getElementById('inputCard');
+            const inputText = document.getElementById('inputText');
+            inputText.textContent = data.input_text || 'No input text available';
+            inputCard.classList.remove('hidden');
+            
+            // Display prompt
+            const promptCard = document.getElementById('promptCard');
+            const promptText = document.getElementById('promptText');
+            promptText.textContent = data.full_prompt || 'No prompt available';
+            promptCard.classList.remove('hidden');
+            
+            // Display processing times chart
+            if (data.processing_times && Object.keys(data.processing_times).length > 0) {
+                const processingTimesCard = document.getElementById('processingTimesCard');
+                displayProcessingTimesChart(data.processing_times);
+                processingTimesCard.classList.remove('hidden');
+            }
+            
+            // Display responses
+            if (data.responses && Object.keys(data.responses).length > 0) {
+                const responsesCard = document.getElementById('responsesCard');
+                const modelTabs = document.getElementById('modelTabs');
+                const modelContentContainer = document.getElementById('modelContentContainer');
+                const comparisonView = document.getElementById('comparisonView');
+                
+                modelTabs.innerHTML = '';
+                modelContentContainer.innerHTML = '';
+                comparisonView.innerHTML = '';
+                
+                // Create tabs and content for each model
+                Object.entries(data.responses).forEach(([modelId, response], index) => {
+                    // Create tab
+                    const tab = document.createElement('div');
+                    tab.className = 'model-tab';
+                    if (index === 0) tab.classList.add('active');
+                    tab.textContent = formatModelName(modelId);
+                    tab.dataset.modelId = modelId;
+                    tab.addEventListener('click', () => switchTab(modelId));
+                    modelTabs.appendChild(tab);
+                    
+                    // Create content
+                    const content = document.createElement('div');
+                    content.className = 'model-content';
+                    if (index === 0) content.classList.add('active');
+                    content.dataset.modelId = modelId;
+                    
+                    const responseText = document.createElement('div');
+                    responseText.className = 'response-text';
+                    responseText.textContent = response;
+                    content.appendChild(responseText);
+                    
+                    // Add processing time if available
+                    if (data.processing_times && data.processing_times[modelId]) {
+                        const processingTime = document.createElement('div');
+                        processingTime.className = 'processing-time';
+                        processingTime.textContent = `Processing time: ${data.processing_times[modelId].toFixed(2)}s`;
+                        content.appendChild(processingTime);
+                    }
+                    
+                    modelContentContainer.appendChild(content);
+                    
+                    // Add to comparison view
+                    const comparisonItem = document.createElement('div');
+                    comparisonItem.className = 'comparison-item';
+                    
+                    const comparisonTitle = document.createElement('h3');
+                    comparisonTitle.textContent = formatModelName(modelId);
+                    comparisonItem.appendChild(comparisonTitle);
+                    
+                    const comparisonResponse = document.createElement('div');
+                    comparisonResponse.className = 'response-text';
+                    comparisonResponse.textContent = response;
+                    comparisonItem.appendChild(comparisonResponse);
+                    
+                    // Add processing time to comparison view
+                    if (data.processing_times && data.processing_times[modelId]) {
+                        const comparisonTime = document.createElement('div');
+                        comparisonTime.className = 'processing-time';
+                        comparisonTime.textContent = `Processing time: ${data.processing_times[modelId].toFixed(2)}s`;
+                        comparisonItem.appendChild(comparisonTime);
+                    }
+                    
+                    comparisonView.appendChild(comparisonItem);
+                });
+                
+                responsesCard.classList.remove('hidden');
+            }
+            
+            // Display errors
+            if (data.errors && Object.keys(data.errors).length > 0) {
+                const errorsCard = document.getElementById('errorsCard');
+                const errorsContainer = document.getElementById('errorsContainer');
+                errorsContainer.innerHTML = '';
+                
+                Object.entries(data.errors).forEach(([modelId, error]) => {
+                    const errorItem = document.createElement('div');
+                    errorItem.className = 'error-item';
+                    
+                    const errorTitle = document.createElement('h3');
+                    errorTitle.textContent = formatModelName(modelId);
+                    errorItem.appendChild(errorTitle);
+                    
+                    const errorText = document.createElement('div');
+                    errorText.className = 'error-text';
+                    errorText.textContent = error;
+                    errorItem.appendChild(errorText);
+                    
+                    errorsContainer.appendChild(errorItem);
+                });
+                
+                errorsCard.classList.remove('hidden');
+            } else {
+                // Hide errors card if there are no errors
+                document.getElementById('errorsCard').classList.add('hidden');
+            }
+            
+            // Collapse all cards except metadata and processing times by default
+            document.querySelectorAll('.card:not(#metadataCard):not(#processingTimesCard)').forEach(card => {
+                card.classList.add('collapsed');
+            });
+        }
+        
+        function switchTab(modelId) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.model-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.model-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            document.querySelector(`.model-tab[data-model-id="${modelId}"]`).classList.add('active');
+            document.querySelector(`.model-content[data-model-id="${modelId}"]`).classList.add('active');
+        }
+        
+        function addMetadataItem(container, label, value) {
+            const item = document.createElement('div');
+            item.className = 'metadata-item';
+            
+            const labelElement = document.createElement('strong');
+            labelElement.textContent = label;
+            item.appendChild(labelElement);
+            
+            const valueElement = document.createElement('span');
+            valueElement.textContent = value;
+            item.appendChild(valueElement);
+            
+            container.appendChild(item);
+        }
+        
+        function formatKey(key) {
+            // Convert camelCase or snake_case to Title Case
+            return key
+                .replace(/_/g, ' ')
+                .replace(/([A-Z])/g, ' $1')
+                .replace(/^./, str => str.toUpperCase());
+        }
+        
+        function formatModelName(modelId) {
+            // Extract provider and model name from model ID
+            const parts = modelId.split('.');
+            if (parts.length < 2) return modelId;
+            
+            const provider = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+            const modelName = parts[1].split('-').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+            
+            return `${provider}: ${modelName}`;
+        }
+        
+        function displayProcessingTimesChart(processingTimes) {
+            try {
+                const ctx = document.getElementById('processingTimesChart').getContext('2d');
+                
+                // Set Chart.js global defaults for cyberpunk theme
+                Chart.defaults.color = '#fff';
+                Chart.defaults.borderColor = '#333';
+                
+                // Sort models by processing time (ascending)
+                const sortedModels = Object.entries(processingTimes)
+                    .sort((a, b) => a[1] - b[1])
+                    .map(entry => ({ modelId: entry[0], time: entry[1] }));
+                
+                const labels = sortedModels.map(model => formatModelName(model.modelId));
+                const times = sortedModels.map(model => model.time);
+                
+                // Generate neon cyberpunk colors based on model provider
+                const colors = sortedModels.map(model => {
+                    const provider = model.modelId.split('.')[0];
+                    switch(provider) {
+                        case 'amazon': return 'rgba(255, 102, 0, 0.8)';      // Neon orange
+                        case 'anthropic': return 'rgba(0, 255, 255, 0.8)';   // Cyan
+                        case 'cohere': return 'rgba(0, 255, 0, 0.8)';        // Neon green
+                        case 'meta': return 'rgba(0, 102, 255, 0.8)';        // Electric blue
+                        case 'mistral': return 'rgba(255, 0, 255, 0.8)';     // Magenta
+                        case 'ai21': return 'rgba(255, 0, 102, 0.8)';        // Hot pink
+                        default: return 'rgba(255, 255, 0, 0.8)';            // Neon yellow
+                    }
+                });
+                
+                // Create chart - check if chart exists and destroy it properly
+                if (window.processingTimesChart instanceof Chart) {
+                    window.processingTimesChart.destroy();
+                }
+                
+                // Create gradient for chart background
+                const gradientBg = ctx.createLinearGradient(0, 0, 0, 400);
+                gradientBg.addColorStop(0, 'rgba(0, 255, 255, 0.05)');
+                gradientBg.addColorStop(0.5, 'rgba(255, 0, 255, 0.05)');
+                gradientBg.addColorStop(1, 'rgba(0, 255, 0, 0.05)');
+                
+                window.processingTimesChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Processing Time (seconds)',
+                            data: times,
+                            backgroundColor: colors,
+                            borderColor: colors.map(color => color.replace('0.8', '1')),
+                            borderWidth: 2,
+                            borderRadius: 4,
+                            hoverBackgroundColor: colors.map(color => color.replace('0.8', '0.9')),
+                            shadowOffsetX: 3,
+                            shadowOffsetY: 3,
+                            shadowBlur: 10,
+                            shadowColor: 'rgba(0, 255, 255, 0.5)',
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleColor: '#0ff',
+                                bodyColor: '#fff',
+                                borderColor: '#0ff',
+                                borderWidth: 1,
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.raw.toFixed(2)} seconds`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 255, 255, 0.1)',
+                                    borderColor: 'rgba(0, 255, 255, 0.3)',
+                                    tickColor: 'rgba(0, 255, 255, 0.3)'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Processing Time (seconds)',
+                                    color: '#0ff',
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                                ticks: {
+                                    color: '#0ff'
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    color: 'rgba(255, 0, 255, 0.1)',
+                                    borderColor: 'rgba(255, 0, 255, 0.3)',
+                                    tickColor: 'rgba(255, 0, 255, 0.3)'
+                                },
+                                ticks: {
+                                    color: '#f0f',
+                                    callback: function(value) {
+                                        const label = this.getLabelForValue(value);
+                                        // Truncate long labels
+                                        return label.length > 25 ? label.substr(0, 22) + '...' : label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Add animation to update chart colors over time
+                function updateChartColors() {
+                    const time = Date.now() * 0.001; // Convert to seconds
+                    const hueShift = (Math.sin(time * 0.2) + 1) * 180; // Range from 0 to 360
+                    
+                    // Update x-axis colors
+                    window.processingTimesChart.options.scales.x.ticks.color = `hsl(${hueShift}, 100%, 50%)`;
+                    window.processingTimesChart.options.scales.x.grid.color = `hsla(${hueShift}, 100%, 50%, 0.1)`;
+                    window.processingTimesChart.options.scales.x.title.color = `hsl(${hueShift}, 100%, 50%)`;
+                    
+                    // Update y-axis colors
+                    window.processingTimesChart.options.scales.y.ticks.color = `hsl(${(hueShift + 180) % 360}, 100%, 50%)`;
+                    window.processingTimesChart.options.scales.y.grid.color = `hsla(${(hueShift + 180) % 360}, 100%, 50%, 0.1)`;
+                    
+                    window.processingTimesChart.update();
+                    
+                    // Request next frame
+                    window.chartColorAnimation = requestAnimationFrame(updateChartColors);
+                }
+                
+                // Start the animation
+                updateChartColors();
+                
+            } catch (error) {
+                console.error('Error creating chart:', error);
+                document.getElementById('processingTimesChart').innerHTML = 
+                    '<div style="padding: 20px; color: #ff5555;">Error creating chart: ' + error.message + '</div>';
+            }
+        }
+    </script>
+</body>
+</html>
