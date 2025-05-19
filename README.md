@@ -1,3 +1,9 @@
+<div align="center">
+<img src="DOCS/images/favicon.png" alt="Bedrock Model Evaluator Logo" width="200" height="200" />
+</div>
+
+
+
 # Bedrock Model Evaluator
 
 **Live Demo: https://bedrock.goth.capital/**
